@@ -1,11 +1,11 @@
 cirve
 =====
 
-En los casos de circuitos lineales y peque駉s es facil obtner su soluci髇
+En los casos de circuitos lineales y peque帽os es facil obtner su soluci贸n
 manualmente. Sin embargo, a medida que la complejidad aumenta es necesaria
-la implementaci髇 de m閠odos num閞icos aplicados en computaci髇. En este 
+la implementaci贸n de m茅todos num茅ricos aplicados en computaci贸n. En este 
 repositorio se presenta el paquete cirve cuya finalidad es resolver circuitos
-algebr醝cos y din醡icos.
+algebr谩icos y din谩micos.
 
 
 Descarga
@@ -15,18 +15,18 @@ Es posible descargar este repositorio con el siguiente enlace
 
 ::
 
-        $https://github.com/CarmenLegarre/circuits_solving/tarball/0.1
+        $https://github.com/CarmenLegarre/circuits_solving/tarball/0.2
 
-Documentaci髇 y uso
+Documentaci贸n y uso
 -------------------
 
-Toda la documentaci髇, tanto en PDF como en formato HTML se encuentra en la carpeta documentation del respositorio. Como alternativa a la documentaci髇 en la 
-carpeta de examples se ofrecen varios ejemplos de su uso, y en consecuencia la forma en la que se deben usar los m閠odos etc.
+Toda la documentaci贸n, tanto en PDF como en formato HTML se encuentra en la carpeta documentation del respositorio. Como alternativa a la documentaci贸n en la 
+carpeta de examples se ofrecen varios ejemplos de su uso, y en consecuencia la forma en la que se deben usar los m茅todos etc.
 
-Instalaci髇
+Instalaci贸n
 -----------
 
-Para su uso es necesario tener la version de Python 3, o superior. Por otro lado, el paquete cirve tiene dependencia de los siquientes paquetes: numpy, sympy, copy, subprocess, PIL, y matplotlib. Para la instalaci髇 de dichos paquetes es posible usar pip, esto es:
+Para su uso es necesario tener la version de Python 3, o superior. Por otro lado, el paquete cirve tiene dependencia de los siquientes paquetes: numpy, sympy, copy, subprocess, PIL, y matplotlib. Para la instalaci贸n de dichos paquetes es posible usar pip, esto es:
 
 ::
 
@@ -38,7 +38,7 @@ Si no se tiene instalado pip consulte la siguiente guia:
 
         $https://www.makeuseof.com/tag/install-pip-for-python/
 
-Y de querer conocer m醩 sobre su funcionamiento:
+Y de querer conocer m谩s sobre su funcionamiento:
 
 ::
 
