@@ -9,7 +9,7 @@ setup(
     author='CarmenLegarre',
     author_email='Carmenlegarreta@hotmail.com',
     url='https://github.com/CarmenLegarre/circuits_solving/', # Usa la URL del repositorio de GitHub
-    download_url='https://github.com/CarmenLegarre/circuits_solving/tarball/0.1', # 
+    download_url='https://github.com/CarmenLegarre/circuits_solving/tarball/0.2', # 
     keywords='circuits, solving', # Palabras que definan tu paquete
     classifiers=['Programming Language :: Python :: 3.7'],
 )
