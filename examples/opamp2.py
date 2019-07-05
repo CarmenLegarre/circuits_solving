@@ -15,7 +15,7 @@ Q7 = Element.Q2N3904(v=[-0.7, -0.7])
 D1 = Element.D1N4002(2.68e-9, v=[-0.01])
 D2 = Element.D1N4002(2.68e-9, v=[-0.01])
 
-C = Element.Capacitor(60e-12, -5)
+C = Element.Capacitor(60e-12, -8)
 R = Element.Resistance(50e3)
 
 Ia = Element.CurrentSource(7.53e-14)
@@ -48,7 +48,7 @@ circuito = [[Q1, [2, 8], [2, 7]], [Q2, [1, 6], [1, 7]],
 stime=time()
 x=Circuit(circuito)
 x.timeAnalysis([19, 21], [0, 0], ["voltage", "voltage"],
-               0, 0.014, 120)
+               0, 0.004, 60)
 
 etime=time()-stime
 print(etime)
