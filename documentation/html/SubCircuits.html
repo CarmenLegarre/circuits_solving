@@ -1,0 +1,225 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Documentation &#8212; Software Development for Circuit Analysis and Solving  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Documentation" href="Elements.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Elements.html" title="Documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Software Development for Circuit Analysis and Solving  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<span class="target" id="module-subcircuito"><span id="subcircuits"></span></span><p>Created on Mon May  6 10:30:44 2019</p>
+<p>&#64;author: Carmen</p>
+<dl class="class">
+<dt id="subcircuito.SubCircuit">
+<em class="property">class </em><code class="descclassname">subcircuito.</code><code class="descname">SubCircuit</code><span class="sig-paren">(</span><em>circuito</em>, <em>v</em>, <em>FT</em>, <em>nl=False</em>, <em>differential=False</em>, <em>cir=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/subcircuito.html#SubCircuit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subcircuito.SubCircuit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="Elements.html#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a set of subcircuits.</p>
+<dl class="docutils">
+<dt>circuito: list</dt>
+<dd>It represents the inner circuit of the subcircuit</dd>
+<dt>v: list</dt>
+<dd>A list with initial values of the subcircuit.</dd>
+<dt>FT: list</dt>
+<dd>It determinates which are the input/output of the inner circuit.</dd>
+<dt>nl: boolean</dt>
+<dd>True if the inner circuit is non-linear. False, otherwise.</dd>
+<dt>differentia: boolean</dt>
+<dd>True if the inner circuit has any capacitor/inductor.</dd>
+<dt>cir: dictionary</dt>
+<dd>The keys of the dictionary are the variables of the inner circuit,
+and the values are the solution of the circuit.</dd>
+</dl>
+<dl class="docutils">
+<dt>nl: boolean</dt>
+<dd>True if the inner circuit is non-linear. False, otherwise.</dd>
+<dt>circuito: list</dt>
+<dd>It represents the inner circuit of the subcircuit</dd>
+</dl>
+<dl class="docutils">
+<dt>setDiscrete():</dt>
+<dd>The input value determinates wheter the element equation is going to
+be linealized or not.</dd>
+<dt>getCir():</dt>
+<dd>It returns the solution of the inner circuit of a SubCircuit type 
+object.</dd>
+<dt>setCir(cir):</dt>
+<dd>It gets the solution of the inner circuit of a SubCircuit type object.</dd>
+<dt>setParamValues():</dt>
+<dd>This methods get values for linearization, and gets the equivalent 
+equation.</dd>
+<dt>setLinearEquations():</dt>
+<dd>It recalculates the equations.</dd>
+<dt>difElements():</dt>
+<dd>It reuturns a list of elements with differential values on its 
+equations.</dd>
+<dt>setIVk():</dt>
+<dd>It is a method for the application of the Euler method in capacitors, 
+and inductors.</dd>
+</dl>
+<dl class="method">
+<dt id="subcircuito.SubCircuit.difElements">
+<code class="descname">difElements</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/subcircuito.html#SubCircuit.difElements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subcircuito.SubCircuit.difElements" title="Permalink to this definition">¶</a></dt>
+<dd><p>It reuturns a list of elements with differential values on its 
+equations.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="subcircuito.SubCircuit.getCir">
+<code class="descname">getCir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/subcircuito.html#SubCircuit.getCir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subcircuito.SubCircuit.getCir" title="Permalink to this definition">¶</a></dt>
+<dd><p>It returns the solution of the inner circuit of a SubCircuit type 
+object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="subcircuito.SubCircuit.setCir">
+<code class="descname">setCir</code><span class="sig-paren">(</span><em>cir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/subcircuito.html#SubCircuit.setCir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subcircuito.SubCircuit.setCir" title="Permalink to this definition">¶</a></dt>
+<dd><p>It gets the solution of the inner circuit of a SubCircuit type object.</p>
+<dl class="docutils">
+<dt>cir: dictionary</dt>
+<dd>The keys of the dictionary are the variables of the inner circuit
+and the values are the solutions of the circuit.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="subcircuito.SubCircuit.setDiscrete">
+<code class="descname">setDiscrete</code><span class="sig-paren">(</span><em>dis</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/subcircuito.html#SubCircuit.setDiscrete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subcircuito.SubCircuit.setDiscrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>The input value determinates wheter the element equation is going to
+be linealized or not.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="subcircuito.SubCircuit.setIVk">
+<code class="descname">setIVk</code><span class="sig-paren">(</span><em>V=None</em>, <em>I=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/subcircuito.html#SubCircuit.setIVk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subcircuito.SubCircuit.setIVk" title="Permalink to this definition">¶</a></dt>
+<dd><p>It is a method for the application of the Euler method in capacitors, 
+and inductors.</p>
+<dl class="docutils">
+<dt>V: list</dt>
+<dd>V contains the voltage solutions of the ports.</dd>
+<dt>I: list</dt>
+<dd>I contains the current solutions of the ports.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="subcircuito.SubCircuit.setLinearEquations">
+<code class="descname">setLinearEquations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/subcircuito.html#SubCircuit.setLinearEquations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subcircuito.SubCircuit.setLinearEquations" title="Permalink to this definition">¶</a></dt>
+<dd><p>This mehtod is only used for linear subcircuits. It is used to 
+when a inner circuit component has a capacitor/inductor type element, 
+that is: when those elements equations change, the equation must be
+recalculated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="subcircuito.SubCircuit.setParamValues">
+<code class="descname">setParamValues</code><span class="sig-paren">(</span><em>v=None</em>, <em>i=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/subcircuito.html#SubCircuit.setParamValues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subcircuito.SubCircuit.setParamValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>This methods get values for linearization, and gets the equivalent 
+equation.</p>
+<dl class="docutils">
+<dt>v: list</dt>
+<dd>v is a list with the voltage values of the elements port.</dd>
+<dt>i: list</dt>
+<dd>i is a list with the current values of the elements port.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Elements.html"
+                        title="previous chapter">Documentation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/SubCircuits.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Elements.html" title="Documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Software Development for Circuit Analysis and Solving  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Carmen Legarreta.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

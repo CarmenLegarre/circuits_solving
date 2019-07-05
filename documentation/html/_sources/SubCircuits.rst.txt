@@ -1,0 +1,12 @@
+Documentation
+=============
+
+|
+
+.. _SubCircuits:
+
+.. automodule:: subcircuito
+    :members: SubCircuit 
+    :undoc-members:
+    :show-inheritance:
+

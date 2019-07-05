@@ -1,0 +1,680 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>subcircuito &#8212; Software Development for Circuit Analysis and Solving  documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Software Development for Circuit Analysis and Solving  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for subcircuito</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Mon May  6 10:30:44 2019</span>
+
+<span class="sd">@author: Carmen</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">elementos</span> <span class="k">as</span> <span class="nn">Element</span>
+<span class="kn">import</span> <span class="nn">circuito</span> <span class="k">as</span> <span class="nn">Cir</span>
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span> <span class="k">as</span> <span class="nn">ra</span>
+<span class="c1">#import copy</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
+
+
+
+<div class="viewcode-block" id="SubCircuit"><a class="viewcode-back" href="../SubCircuits.html#subcircuito.SubCircuit">[docs]</a><span class="k">class</span> <span class="nc">SubCircuit</span><span class="p">(</span><span class="n">Element</span><span class="o">.</span><span class="n">Elements</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class used to represent a set of subcircuits.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    circuito: list</span>
+<span class="sd">        It represents the inner circuit of the subcircuit</span>
+<span class="sd">        </span>
+<span class="sd">    v: list</span>
+<span class="sd">        A list with initial values of the subcircuit.</span>
+<span class="sd">        </span>
+<span class="sd">    FT: list</span>
+<span class="sd">        It determinates which are the input/output of the inner circuit.</span>
+<span class="sd">        </span>
+<span class="sd">    nl: boolean</span>
+<span class="sd">        True if the inner circuit is non-linear. False, otherwise.</span>
+<span class="sd">        </span>
+<span class="sd">    differentia: boolean</span>
+<span class="sd">        True if the inner circuit has any capacitor/inductor.</span>
+<span class="sd">        </span>
+<span class="sd">    cir: dictionary</span>
+<span class="sd">        The keys of the dictionary are the variables of the inner circuit,</span>
+<span class="sd">        and the values are the solution of the circuit.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    nl: boolean</span>
+<span class="sd">        True if the inner circuit is non-linear. False, otherwise.</span>
+<span class="sd">        </span>
+<span class="sd">    circuito: list</span>
+<span class="sd">        It represents the inner circuit of the subcircuit</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    setDiscrete():</span>
+<span class="sd">        The input value determinates wheter the element equation is going to</span>
+<span class="sd">        be linealized or not.</span>
+<span class="sd">        </span>
+<span class="sd">    getCir():</span>
+<span class="sd">        It returns the solution of the inner circuit of a SubCircuit type </span>
+<span class="sd">        object.</span>
+<span class="sd">    </span>
+<span class="sd">    setCir(cir):</span>
+<span class="sd">        It gets the solution of the inner circuit of a SubCircuit type object.</span>
+<span class="sd">        </span>
+<span class="sd">    setParamValues():</span>
+<span class="sd">        This methods get values for linearization, and gets the equivalent </span>
+<span class="sd">        equation.</span>
+<span class="sd">        </span>
+<span class="sd">    setLinearEquations():</span>
+<span class="sd">        It recalculates the equations.</span>
+<span class="sd">        </span>
+<span class="sd">    difElements():</span>
+<span class="sd">        It reuturns a list of elements with differential values on its </span>
+<span class="sd">        equations.</span>
+<span class="sd">        </span>
+<span class="sd">    setIVk():</span>
+<span class="sd">        It is a method for the application of the Euler method in capacitors, </span>
+<span class="sd">        and inductors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circuito</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">FT</span><span class="p">,</span> <span class="n">nl</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">differential</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  
+                 <span class="n">cir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">nl</span><span class="o">=</span><span class="n">nl</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="o">=</span><span class="n">circuito</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__differential</span><span class="o">=</span><span class="n">differential</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__v</span><span class="o">=</span><span class="n">v</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__FT</span><span class="o">=</span><span class="n">FT</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cir</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__discrete</span><span class="o">=</span><span class="kc">None</span>
+        
+        <span class="n">a</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__v</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="o">=</span><span class="p">[[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">)],</span> 
+                         <span class="p">[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="n">j</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">)],</span> 
+                         <span class="p">[</span><span class="n">ra</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)]]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">)]</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nl</span><span class="o">==</span><span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="o">=</span><span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__FT</span><span class="p">]</span>
+            <span class="n">d4</span><span class="o">=</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__FT</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">d3</span><span class="o">=</span><span class="p">{}</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">d3</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">d4</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="o">=</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__v</span><span class="p">]</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__FT</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            
+        
+        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="p">,</span> <span class="n">nl</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nl</span><span class="p">,</span> <span class="n">subcir</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+             <span class="n">differential</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__differential</span><span class="p">)</span>
+        
+        
+<div class="viewcode-block" id="SubCircuit.setDiscrete"><a class="viewcode-back" href="../SubCircuits.html#subcircuito.SubCircuit.setDiscrete">[docs]</a>    <span class="k">def</span> <span class="nf">setDiscrete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dis</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The input value determinates wheter the element equation is going to</span>
+<span class="sd">        be linealized or not.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__discrete</span><span class="o">=</span><span class="n">dis</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__discrete</span><span class="o">==</span><span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setParamValues</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__v</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="p">,</span> <span class="n">nl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+            
+    
+<div class="viewcode-block" id="SubCircuit.getCir"><a class="viewcode-back" href="../SubCircuits.html#subcircuito.SubCircuit.getCir">[docs]</a>    <span class="k">def</span> <span class="nf">getCir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        It returns the solution of the inner circuit of a SubCircuit type </span>
+<span class="sd">        object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cir</span></div>
+    
+<div class="viewcode-block" id="SubCircuit.setCir"><a class="viewcode-back" href="../SubCircuits.html#subcircuito.SubCircuit.setCir">[docs]</a>    <span class="k">def</span> <span class="nf">setCir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cir</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        It gets the solution of the inner circuit of a SubCircuit type object.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cir: dictionary</span>
+<span class="sd">            The keys of the dictionary are the variables of the inner circuit</span>
+<span class="sd">            and the values are the solutions of the circuit.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cir</span><span class="o">=</span><span class="n">cir</span></div>
+        
+        
+        
+<div class="viewcode-block" id="SubCircuit.setParamValues"><a class="viewcode-back" href="../SubCircuits.html#subcircuito.SubCircuit.setParamValues">[docs]</a>    <span class="k">def</span> <span class="nf">setParamValues</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This methods get values for linearization, and gets the equivalent </span>
+<span class="sd">        equation.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        v: list</span>
+<span class="sd">            v is a list with the voltage values of the elements port.</span>
+<span class="sd">            </span>
+<span class="sd">        i: list</span>
+<span class="sd">            i is a list with the current values of the elements port.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">v</span><span class="o">==</span><span class="kc">None</span><span class="p">:</span>
+            <span class="n">v</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__v</span>    
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__v</span><span class="o">=</span><span class="n">v</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hola&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="o">=</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__v</span><span class="p">]</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__FT</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">d3</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">d3</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+        <span class="n">circuito</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span>
+
+        <span class="n">a</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="o">=</span><span class="p">[[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">)],</span> 
+                         <span class="p">[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="n">j</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">)],</span> 
+                         <span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">)]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],[</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="n">i</span><span class="p">]]]])</span>
+            
+            
+        <span class="n">c</span><span class="o">=</span><span class="n">Cir</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">circuito</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">solution</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCir</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">solution</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">]]])</span>
+            
+        <span class="n">nol</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">e</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">circuito</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getNL</span><span class="p">():</span>
+                <span class="n">nol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">e</span><span class="p">[</span><span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span><span class="o">=</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getEquation</span><span class="p">())</span>
+                <span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">setDiscrete</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                
+        <span class="bp">self</span><span class="o">.</span><span class="n">__lin0</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d3</span><span class="p">,</span> <span class="n">circuito</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nol</span><span class="p">:</span>
+            <span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">setEquation</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]])</span>
+            <span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">setDiscrete</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>  
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__discrete</span><span class="o">==</span><span class="kc">True</span><span class="p">:</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="o">=</span><span class="n">circuito</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="p">,</span> <span class="n">nl</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>    </div>
+            
+<div class="viewcode-block" id="SubCircuit.setLinearEquations"><a class="viewcode-back" href="../SubCircuits.html#subcircuito.SubCircuit.setLinearEquations">[docs]</a>    <span class="k">def</span> <span class="nf">setLinearEquations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This mehtod is only used for linear subcircuits. It is used to </span>
+<span class="sd">        when a inner circuit component has a capacitor/inductor type element, </span>
+<span class="sd">        that is: when those elements equations change, the equation must be</span>
+<span class="sd">        recalculated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#reservado para los elementos lineales. Esto se utilizara cuando</span>
+        <span class="c1">#un subcircuito lineal tenga algun elemento dinamico. Si el elemento</span>
+        <span class="c1">#dinamico cambia, es necesario recalcular la ecuacion del subcicuito.</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getSubcir</span><span class="p">():</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">setLinearEquations</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">nl</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">==</span><span class="n">Element</span><span class="o">.</span><span class="n">Resistance</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__lin2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d3</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__lin3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d3</span><span class="p">)</span></div>
+     
+    <span class="c1">#comprobado que esto funciona      </span>
+    <span class="k">def</span> <span class="nf">__lin0</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">d3</span><span class="p">,</span> <span class="n">circuito</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="o">=</span><span class="p">[[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">))],</span> 
+                        <span class="p">[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="n">j</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">))],</span> 
+                        <span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">))]</span>
+        
+        <span class="n">c</span><span class="o">=</span><span class="n">Cir</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">circuito</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=-</span><span class="n">c</span><span class="o">.</span><span class="n">solution</span><span class="p">(</span><span class="n">d3</span><span class="p">[</span><span class="n">d1</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;current&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">)):</span>
+            <span class="n">d2</span><span class="p">[</span><span class="n">d1</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]])</span>
+            <span class="n">c</span><span class="o">=</span><span class="n">Cir</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">circuito</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">=+</span><span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">c</span><span class="o">.</span><span class="n">solution</span><span class="p">(</span><span class="n">d3</span><span class="p">[</span><span class="n">d1</span><span class="p">[</span><span class="n">j</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;current&quot;</span><span class="p">)</span>
+            
+            <span class="n">d2</span><span class="p">[</span><span class="n">d1</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]])</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">equation</span>
+    
+    
+    <span class="c1">#__lin2 he comprobado su funcionamiento y parece que esta bien (teoricamente)</span>
+    <span class="c1">#tendria que comprobarlo en la practica. Se han hecho unas correcciones,</span>
+    <span class="c1">#y se ha comprobado que su funcionamiento es correcto.</span>
+    <span class="k">def</span> <span class="nf">__lin2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circuito</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">d3</span><span class="p">):</span>
+        
+        <span class="n">equation</span><span class="o">=</span><span class="p">[[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">))],</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">))],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]</span> 
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">))]</span>
+        
+        <span class="n">R</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">r</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">equation</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">R</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">=</span><span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">R</span><span class="p">)):</span>
+            
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">)):</span>
+                <span class="n">d1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">R</span><span class="p">[</span><span class="n">j</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]])</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">Cir</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">circuito</span><span class="p">)</span>
+                
+            <span class="n">voltage</span><span class="o">=</span><span class="p">[]</span>
+            <span class="n">current</span><span class="o">=</span><span class="p">[]</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">d1</span><span class="p">:</span>
+                <span class="n">voltage</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">solution</span><span class="p">(</span><span class="n">d3</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;voltage&quot;</span><span class="p">))</span>
+                <span class="n">current</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">solution</span><span class="p">(</span><span class="n">d3</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;current&quot;</span><span class="p">))</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">voltage</span><span class="p">,</span> <span class="n">current</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">R</span><span class="p">)):</span>
+                <span class="n">R</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">r</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                
+                
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])):</span>
+                <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                
+        <span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">))]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">b</span><span class="o">=</span><span class="p">[]</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)):</span>
+                <span class="n">b</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+                
+            <span class="n">A</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
+            <span class="n">B</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+            
+            <span class="n">equation</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">equation</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)):</span>
+                <span class="n">equation</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">equation</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-=</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">equation</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=-</span><span class="n">equation</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  
+        <span class="k">return</span> <span class="n">equation</span>
+    
+    
+    <span class="k">def</span> <span class="nf">__lin3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circuito</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">d3</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="o">=</span><span class="p">[[[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="n">j</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">))],</span> 
+                         <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">))],</span> 
+                         <span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">))]</span>
+        
+        <span class="n">c</span><span class="o">=</span><span class="n">Cir</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">circuito</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">solution</span><span class="p">(</span><span class="n">d3</span><span class="p">[</span><span class="n">d1</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;voltage&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">)):</span>
+            <span class="n">d1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]])</span>
+            <span class="n">c</span><span class="o">=</span><span class="n">Cir</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">circuito</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">=+</span><span class="bp">self</span><span class="o">.</span><span class="n">equation</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">c</span><span class="o">.</span><span class="n">solution</span><span class="p">(</span><span class="n">d3</span><span class="p">[</span><span class="n">d1</span><span class="p">[</span><span class="n">j</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;voltage&quot;</span><span class="p">)</span>
+            
+            <span class="n">d1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]])</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">equation</span>
+
+
+                    
+        
+<div class="viewcode-block" id="SubCircuit.difElements"><a class="viewcode-back" href="../SubCircuits.html#subcircuito.SubCircuit.difElements">[docs]</a>    <span class="k">def</span>  <span class="nf">difElements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        It reuturns a list of elements with differential values on its </span>
+<span class="sd">        equations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">a</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">)):</span>
+            <span class="n">e</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getDif</span><span class="p">()</span> <span class="ow">and</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getSubcir</span><span class="p">():</span>
+                <span class="n">a</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">difElements</span><span class="p">())</span>
+            <span class="k">elif</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getDif</span><span class="p">():</span>
+                <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">a</span></div>
+    
+
+                    
+                    
+<div class="viewcode-block" id="SubCircuit.setIVk"><a class="viewcode-back" href="../SubCircuits.html#subcircuito.SubCircuit.setIVk">[docs]</a>    <span class="k">def</span> <span class="nf">setIVk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">V</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">I</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        It is a method for the application of the Euler method in capacitors, </span>
+<span class="sd">        and inductors.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        V: list</span>
+<span class="sd">            V contains the voltage solutions of the ports.</span>
+<span class="sd">            </span>
+<span class="sd">        I: list</span>
+<span class="sd">            I contains the current solutions of the ports.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dim1</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">dim2</span><span class="o">=</span><span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">)):</span>
+            
+            <span class="n">elemento</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getSubcir</span><span class="p">()</span> <span class="ow">and</span> <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getDif</span><span class="p">()</span> <span class="ow">and</span>  <span class="ow">not</span> <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getNL</span><span class="p">():</span>
+                
+                <span class="n">dim1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                
+            <span class="k">elif</span> <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getSubcir</span><span class="p">()</span> <span class="ow">and</span> <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getDif</span><span class="p">()</span> <span class="ow">and</span> <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getNL</span><span class="p">():</span>
+                <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">setIVk</span><span class="p">()</span>    
+                
+            <span class="k">elif</span> <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getDif</span><span class="p">():</span>
+                <span class="n">dim2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dim1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">nl</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">)):</span>
+                    <span class="n">r</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">==</span><span class="n">Element</span><span class="o">.</span><span class="n">Resistance</span><span class="p">:</span>
+                        <span class="n">r</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]])</span>
+                        
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">r</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]]]])</span>
+                        
+                <span class="bp">self</span><span class="o">.</span><span class="n">setCir</span><span class="p">(</span><span class="n">Cir</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">))</span>    
+            <span class="c1">#esta sentencia es tanto valida para los casos con circuito</span>
+            <span class="c1">#principal lineal como no lineal.</span>
+            <span class="n">cir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getCir</span><span class="p">()</span>
+            
+            <span class="n">I</span><span class="o">=</span><span class="p">[</span><span class="n">cir</span><span class="o">.</span><span class="n">solution</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="s2">&quot;current&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">elemento</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+            <span class="n">V</span><span class="o">=</span><span class="p">[</span><span class="n">cir</span><span class="o">.</span><span class="n">solution</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="s2">&quot;voltage&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">elemento</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+            <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">setIVk</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+            
+            
+        
+        <span class="c1">#caso de circuito principal lineal.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">nl</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">)):</span>
+                <span class="n">r</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">==</span><span class="n">Element</span><span class="o">.</span><span class="n">Resistance</span><span class="p">:</span>
+                    <span class="n">r</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]])</span>
+                    
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">r</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]]]])</span>
+                    
+            <span class="bp">self</span><span class="o">.</span><span class="n">setCir</span><span class="p">(</span><span class="n">Cir</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">))</span>
+            
+            <span class="n">cir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getCir</span><span class="p">()</span>
+            
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dim2</span><span class="p">:</span>
+                <span class="n">elemento</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getDifValue</span><span class="p">()</span><span class="o">==</span><span class="s2">&quot;v&quot;</span><span class="p">:</span>
+                    <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">vk</span><span class="p">(</span><span class="n">cir</span><span class="o">.</span><span class="n">solution</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;voltage&quot;</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getDifValue</span><span class="p">()</span><span class="o">==</span><span class="s2">&quot;i&quot;</span><span class="p">:</span>
+                    <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ik</span><span class="p">(</span><span class="n">cir</span><span class="o">.</span><span class="n">solution</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;current&quot;</span><span class="p">))</span>
+                    
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">)):</span>
+                <span class="n">r</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__d2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__d1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">==</span><span class="n">Element</span><span class="o">.</span><span class="n">Resistance</span><span class="p">:</span>
+                    <span class="n">r</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]])</span>
+                    
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">r</span><span class="o">.</span><span class="n">setEquation</span><span class="p">([[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]])</span>
+                    
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getCir</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dim2</span><span class="p">:</span>
+                <span class="n">elemento</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getDifValue</span><span class="p">()</span><span class="o">==</span><span class="s2">&quot;v&quot;</span><span class="p">:</span>
+                    <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">vk</span><span class="p">(</span><span class="n">cir</span><span class="o">.</span><span class="n">solution</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;voltage&quot;</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getDifValue</span><span class="p">()</span><span class="o">==</span><span class="s2">&quot;i&quot;</span><span class="p">:</span>
+                    <span class="n">elemento</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ik</span><span class="p">(</span><span class="n">cir</span><span class="o">.</span><span class="n">solution</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;current&quot;</span><span class="p">))</span></div></div>
+                    
+                    
+        
+
+        
+        
+        
+<span class="s2">&quot;===============================OPAMP2========================================&quot;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">No funciona</span>
+<span class="sd">&quot;&quot;&quot;</span>      
+        
+<span class="c1">#class Opamp2(SubCircuit):</span>
+<span class="c1">#    &quot;&quot;&quot;</span>
+<span class="c1">#    A class to represent a real Operational Amplifier.</span>
+<span class="c1">#    &quot;&quot;&quot;</span>
+<span class="c1">#    def __init__(self):</span>
+<span class="c1">#        Q1=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        Q2=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        Q3=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        Q7=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        Q8=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        Q13=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        Q12=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        Q14=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        Q17=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        Q15=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        Q16=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        Q18=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        Q20=Element.Q2N3904(v=[0, 0])</span>
+<span class="c1">#        </span>
+<span class="c1">#        Q6=Element.Q2N3906(v=[0, 0])</span>
+<span class="c1">#        Q5=Element.Q2N3906(v=[0, 0])</span>
+<span class="c1">#        Q4=Element.Q2N3906(v=[0, 0])</span>
+<span class="c1">#        Q9=Element.Q2N3906(v=[0, 0])</span>
+<span class="c1">#        Q10=Element.Q2N3906(v=[0, 0])</span>
+<span class="c1">#        Q11=Element.Q2N3906(v=[0, 0])</span>
+<span class="c1">#        Q19=Element.Q2N3906(v=[0, 0])</span>
+<span class="c1">#        </span>
+<span class="c1">#        R1=Element.Resistance(1e3)</span>
+<span class="c1">#        R2=Element.Resistance(50e3)</span>
+<span class="c1">#        R3=R1</span>
+<span class="c1">#        R4=Element.Resistance(5e3)</span>
+<span class="c1">#        R5=R2</span>
+<span class="c1">#        R6=Element.Resistance(50)</span>
+<span class="c1">#        R7=Element.Resistance(7.5e3)</span>
+<span class="c1">#        R8=Element.Resistance(4.5e3)</span>
+<span class="c1">#        R9=Element.Resistance(25)</span>
+<span class="c1">#        R10=R6</span>
+<span class="c1">#        </span>
+<span class="c1">#        c=Element.Capacitor(60e-12)</span>
+<span class="c1">#        </span>
+<span class="c1">#        </span>
+<span class="c1">#        </span>
+<span class="c1">#        FT1=Element.VoltageSource(10)#Vcc+</span>
+<span class="c1">#        FT2=Element.VoltageSource(-10)#Vcc-</span>
+<span class="c1">#        FT3=Element.VoltageSource(1)#Vin+</span>
+<span class="c1">#        FT4=Element.VoltageSource(-1)#Vin-</span>
+<span class="c1">#        FT5=Element.VoltageSource(5)#Vout</span>
+<span class="c1">#        </span>
+<span class="c1">#        FT=[[FT1, [1, 0]], [FT2, [26, 0]], [FT3, [3, 0]], [FT4, [4, 0]],</span>
+<span class="c1">#            [FT5, [5, 0]]]</span>
+<span class="c1">#        </span>
+<span class="c1">#        circuito=[[FT1, [1, 0]], [FT2, [26, 0]], [FT3, [3, 0]], [FT4, [4, 0]],</span>
+<span class="c1">#                  [Q1, [2, 5], [2, 6]], [Q2, [3, 5], [3, 7]], </span>
+<span class="c1">#                  [Q3, [9, 1], [9, 11]], [Q4, [5, 5], [5, 1]], </span>
+<span class="c1">#                  [Q5, [8, 10], [8, 7]],</span>
+<span class="c1">#                  [Q6, [8, 9], [8, 6]], [Q7, [11, 9], [11, 12]], </span>
+<span class="c1">#                  [Q8, [11, 10], [11, 14]], [Q9, [5, 15], [5, 1]], </span>
+<span class="c1">#                  [Q10, [18, 18], [18, 1]],</span>
+<span class="c1">#                  [Q11, [18, 19], [18, 1]], [Q12, [17, 17], [17, 26]], </span>
+<span class="c1">#                  [Q13, [17, 15], [17, 16]], [Q14, [20, 19], [20, 21]],</span>
+<span class="c1">#                  [Q15, [22, 21], [22, 23]], </span>
+<span class="c1">#                  [Q16, [7, 21], [7, 22]], [Q17, [23, 7], [23, 26]], </span>
+<span class="c1">#                  [Q18, [19, 1], [19, 24]], [Q19, [21, 26], [21, 25]], </span>
+<span class="c1">#                  [Q20, [24, 19], [24, 4]],</span>
+<span class="c1">#                  [R1, [12, 26]], [R2, [13, 26]], [R3, [14, 26]], </span>
+<span class="c1">#                  [R4, [16, 26]], [R5, [22, 26]], [R6, [23, 26]], </span>
+<span class="c1">#                  [R7, [20, 21]],</span>
+<span class="c1">#                  [R8, [20, 19]], [R9, [24, 4]], [R10, [4, 25]], </span>
+<span class="c1">#                  [c, [19, 7]], [FT5, [5, 0]]]</span>
+<span class="c1">#        v=[10, -10, 0, 0, 0]</span>
+<span class="c1">#        </span>
+<span class="c1">#        super().__init__(circuito, v, FT, nl=True, differential=True)</span>
+        
+        
+        
+        
+
+        
+<span class="s2">&quot;===============================OPAMP5========================================&quot;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Funciona.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">Opamp5</span><span class="p">(</span><span class="n">SubCircuit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class represents a simplified Operational Amplifier.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">Q1</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">Q2N3906</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">],</span> <span class="n">i</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">Q2</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">Q2N3906</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">],</span> <span class="n">i</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">Q8</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">Q2N3906</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">],</span> <span class="n">i</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        
+        <span class="n">Q3</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">Q2N3904</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">],</span> <span class="n">i</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">Q4</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">Q2N3904</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">],</span> <span class="n">i</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">Q5</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">Q2N3904</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">],</span> <span class="n">i</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">Q6</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">Q2N3904</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">],</span> <span class="n">i</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">Q7</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">Q2N3904</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">],</span> <span class="n">i</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        
+        <span class="n">D1</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">D1N4002</span><span class="p">(</span><span class="mf">2.68e-9</span><span class="p">)</span>
+        <span class="n">D2</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">D1N4002</span><span class="p">(</span><span class="mf">2.68e-9</span><span class="p">)</span>
+        
+        <span class="n">C</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">Capacitor</span><span class="p">(</span><span class="mf">60e-12</span><span class="p">)</span>
+        <span class="n">Vc</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">VoltageSource</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">)</span>
+        <span class="n">R</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">Resistance</span><span class="p">(</span><span class="mf">50e3</span><span class="p">)</span>
+        
+        <span class="n">Ia</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">CurrentSource</span><span class="p">(</span><span class="mf">19.51e-6</span><span class="p">)</span>
+        <span class="n">Ic</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">CurrentSource</span><span class="p">(</span><span class="mf">3e-9</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">CurrentSource</span><span class="p">(</span><span class="mf">1e-12</span><span class="p">)</span>
+        
+        <span class="n">FT1</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">VoltageSource</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">FT2</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">VoltageSource</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">FT3</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">VoltageSource</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">FT4</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">VoltageSource</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">FT5</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">VoltageSource</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">FT</span><span class="o">=</span><span class="n">Element</span><span class="o">.</span><span class="n">VoltageSource</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="o">=</span><span class="p">[[</span><span class="n">Q1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]],</span> <span class="p">[</span><span class="n">Q2</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">]],</span> 
+                       <span class="p">[</span><span class="n">Q3</span><span class="p">,</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],[</span><span class="n">Q4</span><span class="p">,</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span> 
+                       <span class="p">[</span><span class="n">Ia</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">]],</span> <span class="p">[</span><span class="n">Vc</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">]],</span> <span class="p">[</span><span class="n">Q5</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">]],</span>
+                       <span class="p">[</span><span class="n">R</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span> <span class="p">[</span><span class="n">Q6</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span> <span class="p">[</span><span class="n">D1</span><span class="p">,</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">]],</span> 
+                       <span class="p">[</span><span class="n">D2</span><span class="p">,</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">]],[</span><span class="n">Ic</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">]],</span> <span class="p">[</span><span class="n">Q7</span><span class="p">,</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">]],</span> 
+                       <span class="p">[</span><span class="n">Q8</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">]],[</span><span class="n">FT1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">FT2</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> 
+                       <span class="p">[</span><span class="n">FT3</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">FT4</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">FT</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">]],</span>
+                       <span class="p">[</span><span class="n">FT5</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]]</span>
+        
+        <span class="n">FT</span><span class="o">=</span><span class="p">[[</span><span class="n">FT3</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">FT4</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">FT1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">FT2</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> 
+            <span class="p">[</span><span class="n">FT5</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]]</span>
+        
+        <span class="n">v</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+     
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuito</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">FT</span><span class="p">,</span> <span class="n">nl</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">differential</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        
+        
+        
+        
+
+
+    
+        
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Software Development for Circuit Analysis and Solving  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Carmen Legarreta.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

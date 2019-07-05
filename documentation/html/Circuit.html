@@ -1,0 +1,344 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Documentation &#8212; Software Development for Circuit Analysis and Solving  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Documentation" href="Elements.html" />
+    <link rel="prev" title="Software Development for Circuit Analysis and Solving’s documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Elements.html" title="Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Software Development for Circuit Analysis and Solving’s documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Software Development for Circuit Analysis and Solving  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<span class="target" id="module-circuito"></span><p>This script contains the Circuit class. It allows the user to save the 
+parameters of the circuit, such as; elements and each nodes. Once the 
+circuit is defined, the user can get tableau equations, voltage solution,
+current solution….</p>
+<dl class="class">
+<dt id="circuito.Circuit">
+<em class="property">class </em><code class="descclassname">circuito.</code><code class="descname">Circuit</code><span class="sig-paren">(</span><em>circuit</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/circuito.html#Circuit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#circuito.Circuit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>A class used to represent a circuit.</p>
+<dl class="docutils">
+<dt>circuit: list</dt>
+<dd>It is a list, with elements and lists, which represents a circuit.
+circuit parameter must have the following structure;
+[[r1, [0, 1]], [r2, [1, 2]], …, [V, [n, 0]]]
+[r1, [0, 1]]–&gt;r1 resistive element connected to 0 and 1 nodes.
+The current will pass from 0 node to 1.
+[r2, [1, 2]]–&gt;r1 resistive element connected to 1 and 2 nodes.
+The current will pass from 1 node to 2.
+.
+.
+.</dd>
+</dl>
+<dl class="docutils">
+<dt>variables: list</dt>
+<dd>It is a list with circuit variables in a symbolic form.</dd>
+<dt>nl: boolean</dt>
+<dd>It determinates if the circuit is linear, or non-lineal, that it: if
+nl is True the circuit will be non-lineal, and if it False, lineal.</dd>
+</dl>
+<dl class="docutils">
+<dt>add(n):</dt>
+<dd>It adds a element/group of elements, defined by the input n,in the
+circuit attribute.</dd>
+<dt>reset(circuit):</dt>
+<dd>It erases the defined circuit attribute and introduces another one.</dd>
+<dt>get():</dt>
+<dd>when this method is called, the user will get the objectÂ´s circuit
+attribute value.</dd>
+<dt>getTableua():</dt>
+<dd>when this method is called, the user will get the matrix
+representation of the tableau equations.</dd>
+<dt>solution(position, port, variable, initcondition):</dt>
+<dd>It returns the solution of the circuit.</dd>
+<dt>dcAnalysis(position, ports, variable, dcelement, t0, t1, steps):</dt>
+<dd>It makes a graph which shows the change of a element variable, as
+a VoltageSource type element changes its value</dd>
+<dt>timeAnalysis(position, ports, variable, t0, t1, steps):</dt>
+<dd>It makes a graph which shows the change of a element variable, as
+the time change.</dd>
+<dt>theveninEquivalent(node1, node2):</dt>
+<dd>It returns the thevenin equivalent of the circuit.</dd>
+<dt>NortonEquivalent(node1, node2):</dt>
+<dd>It return the Norton equivalent of the circuit.</dd>
+</dl>
+<dl class="docutils">
+<dt>InputError:</dt>
+<dd>If the Circuit object initiate argument structure is not what supposed
+to be. The structure it must follow is described in the Parameters
+section.
+If the Circuit initiate argument does not meet the khirchoffs law
+criteria.</dd>
+</dl>
+<blockquote>
+<div>Circuit 0 node represents ground.</div></blockquote>
+<dl class="method">
+<dt id="circuito.Circuit.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/circuito.html#Circuit.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#circuito.Circuit.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method adds elements, with each respective node notation.
+The adding element must have the same structure as the
+initiate arguments; [[element1,[node1, node2], [node3, node4],… ],
+[element2, [node1Â´, node2Â´], [node3Â´, node4Â´],… ],…]</p>
+<p>n: list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="circuito.Circuit.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/circuito.html#Circuit.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#circuito.Circuit.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>It return a copy of this object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="circuito.Circuit.dcAnalysis">
+<code class="descname">dcAnalysis</code><span class="sig-paren">(</span><em>position</em>, <em>ports</em>, <em>variables</em>, <em>dcelement</em>, <em>v0</em>, <em>vi</em>, <em>steps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/circuito.html#Circuit.dcAnalysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#circuito.Circuit.dcAnalysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function allows the user to see a circuit variable change as the
+VoltageSource type element, defined with the input variavle dcelement
+value change from v0, to vi.</p>
+<dl class="docutils">
+<dt>position: list</dt>
+<dd>This parameter must contain integers which the position of the
+wanted elements to be analysed.</dd>
+<dt>ports: list</dt>
+<dd>Specify from which ports will bet get the variable information,
+respectively.</dd>
+<dt>variables: list</dt>
+<dd>the variable to be studied. There are four options; voltage,
+current, node1, node2. These variables are related to the Element
+type object.</dd>
+<dt>dcelement: list</dt>
+<dd>It must be a VoltageSource Type element with each nodes</dd>
+<dt>v0: float</dt>
+<dd>Voltage at which the analysis starts.</dd>
+<dt>vi: float</dt>
+<dd>Voltage at which the analysis finishes.</dd>
+<dt>steps: int</dt>
+<dd>number of steps from v0 to vi.</dd>
+</dl>
+<blockquote>
+<div>It is possible to use this function in circuits with capacitors and
+inductor. The step size will be 1e-5. However, elements with t 
+dependency are not allowed.</div></blockquote>
+<dl class="docutils">
+<dt>InputError</dt>
+<dd>If the element parameter is not in the circuit</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="circuito.Circuit.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/circuito.html#Circuit.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#circuito.Circuit.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>It returns it’s  circuit attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="circuito.Circuit.getTableau">
+<code class="descname">getTableau</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/circuito.html#Circuit.getTableau"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#circuito.Circuit.getTableau" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns a tuple with two list. The first one holds tableu
+for currents, voltages, and tableau for elements. The second one has
+the values of the excited sources.</p>
+<dl class="docutils">
+<dt>t, u: tuple</dt>
+<dd>t: list
+u: list</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="circuito.Circuit.nortonEquivalent">
+<code class="descname">nortonEquivalent</code><span class="sig-paren">(</span><em>nodo1</em>, <em>nodo2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/circuito.html#Circuit.nortonEquivalent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#circuito.Circuit.nortonEquivalent" title="Permalink to this definition">¶</a></dt>
+<dd><p>It calculates the Norton equivalent of the circuit.</p>
+<dl class="docutils">
+<dt>nodo1: int</dt>
+<dd>It is equivalent to the positive node, node+</dd>
+<dt>nodo2: int</dt>
+<dd>It is equivalent to the negative node, node-</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="circuito.Circuit.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>circuit=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/circuito.html#Circuit.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#circuito.Circuit.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>When reset method is called, the defined circuit attribute will be
+replaced by the input parameter. If there is no input parameter, then
+the circuit attribute will be defined by a default variable.</p>
+<dl class="docutils">
+<dt>circuit: list</dt>
+<dd>It represents a circuit that will replaced the already defined
+circuit attribute.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="circuito.Circuit.solution">
+<code class="descname">solution</code><span class="sig-paren">(</span><em>position=None</em>, <em>port=None</em>, <em>variable=None</em>, <em>initcondition=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/circuito.html#Circuit.solution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#circuito.Circuit.solution" title="Permalink to this definition">¶</a></dt>
+<dd><p>It returns a dictionary which keys are the circuit variables: $i_1$,
+$i_2$,…, $e_1$, $e_2$,… . The values of the keys are the solutions
+of the circuit.</p>
+<dl class="docutils">
+<dt>position: list</dt>
+<dd>This parameter must contain integers which the position , from 0
+to the number of elements-1, of the wanted elements to be
+analysed.</dd>
+<dt>port: list</dt>
+<dd>Specify from which ports will bet get the variable information,
+respectively.</dd>
+<dt>variable: list</dt>
+<dd>The variable to be studied. There are four options; voltage,
+current, node1, node2. These variables are related to the Element
+type object.</dd>
+<dt>initcondition: dictionary</dt>
+<dd>A dictionary which keys are the circuit variables, and each values
+are the initial conditions.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="circuito.Circuit.theveninEquivalent">
+<code class="descname">theveninEquivalent</code><span class="sig-paren">(</span><em>nodo1</em>, <em>nodo2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/circuito.html#Circuit.theveninEquivalent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#circuito.Circuit.theveninEquivalent" title="Permalink to this definition">¶</a></dt>
+<dd><p>It calculates the Thevenin equivalent of the circuit.</p>
+<dl class="docutils">
+<dt>nodo1: int</dt>
+<dd>It is equivalent to the positive node, node+</dd>
+<dt>nodo2: int</dt>
+<dd>It is equivalent to the negative node, node-</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="circuito.Circuit.timeAnalysis">
+<code class="descname">timeAnalysis</code><span class="sig-paren">(</span><em>position</em>, <em>ports</em>, <em>variable</em>, <em>t0</em>, <em>t1</em>, <em>steps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/circuito.html#Circuit.timeAnalysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#circuito.Circuit.timeAnalysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function allows the user to see a circuit variable change as the
+time changes.</p>
+<dl class="docutils">
+<dt>position: list</dt>
+<dd>This parameter must contain integers which the position of the
+wanted elements to be analysed.</dd>
+<dt>ports: list</dt>
+<dd>Specify from which ports will bet get the variable information,
+respectively.</dd>
+<dt>variable: list</dt>
+<dd>the variable to be studied. There are four options; voltage,
+current, node1, node2. These variables are related to the Element
+type object.</dd>
+<dt>t0: float</dt>
+<dd>Time at which the analysis starts.</dd>
+<dt>t1: float</dt>
+<dd>Time at which the analysis finishes.</dd>
+<dt>steps: int</dt>
+<dd>number of steps from t0 to t1.</dd>
+</dl>
+<dl class="docutils">
+<dt>InputError</dt>
+<dd>If the element parameter is not in the circuit</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Software Development for Circuit Analysis and Solving’s documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Elements.html"
+                        title="next chapter">Documentation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Circuit.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Elements.html" title="Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Software Development for Circuit Analysis and Solving’s documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Software Development for Circuit Analysis and Solving  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Carmen Legarreta.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

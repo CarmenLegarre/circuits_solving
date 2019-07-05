@@ -1,0 +1,43 @@
+.. Software Development for Circuit Analysis and Solving documentation master file, created by
+   sphinx-quickstart on Tue Jun 18 13:36:40 2019.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Software Development for Circuit Analysis and Solving's documentation
+=====================================================================
+
+The aim of this project is provide a free python program to solve circuits.
+
+*******
+Circuit
+*******
+The class Circuit has been made to represent, analysed, and solve circuits. This class provides some solving modes.
+
+.. toctree::
+   :maxdepth: 3
+
+   Circuit
+
+*********
+ Elements
+*********
+
+The Elements class represents differents elements, all of them have terminals, equations to represent the physical behaviour, etc.
+
+.. toctree::
+   :maxdepth: 3
+
+   Elements
+
+***********
+SubCircuits
+***********
+
+The SubCircuit class is used to represent and implement differents integrated circuit, such as the Operational Amplifier.
+
+.. toctree::
+   :maxdepth: 3
+
+   SubCircuits
+
+

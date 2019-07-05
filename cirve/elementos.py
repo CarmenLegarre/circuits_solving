@@ -13,7 +13,6 @@ from .circuito import Circuit
 import sympy as sy
 import math as m
 import numpy as np
-import copy
 
 s, h, t = sy.symbols("s h t")
 vc = sy.symbols("vc")
@@ -618,7 +617,6 @@ class D1N4002(Elements):
             
         self.v = v
         v0 = v[0]
-        print(v)
         
         g = self.__i0*sy.exp(v0/self.__vt)/self.__vt
         i = self.__i0*(sy.exp(v0/self.__vt)-1)-self.__i0*sy.exp(v0/self.__vt)*v0/self.__vt

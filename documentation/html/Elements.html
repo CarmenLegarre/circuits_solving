@@ -1,0 +1,939 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Documentation &#8212; Software Development for Circuit Analysis and Solving  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Documentation" href="SubCircuits.html" />
+    <link rel="prev" title="Documentation" href="Circuit.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="SubCircuits.html" title="Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Circuit.html" title="Documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Software Development for Circuit Analysis and Solving  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<span class="target" id="module-elementos"></span><dl class="class">
+<dt id="elementos.ACCurrentSource">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">ACCurrentSource</code><span class="sig-paren">(</span><em>value</em>, <em>frequency</em>, <em>phase=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#ACCurrentSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.ACCurrentSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a AC voltage source.</p>
+<dl class="docutils">
+<dt>value: float</dt>
+<dd>The amplitude of the AC current source..</dd>
+<dt>frequency: float</dt>
+<dd>The frequency of the AC current source.</dd>
+<dt>phase: float</dt>
+<dd>The phase of the AC current source</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the voltage source constitutive equation.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.ACVoltageSource">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">ACVoltageSource</code><span class="sig-paren">(</span><em>value</em>, <em>frequency</em>, <em>phase=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#ACVoltageSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.ACVoltageSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a AC voltage source.</p>
+<dl class="docutils">
+<dt>value: float</dt>
+<dd>The amplitude of the AC voltage source..</dd>
+<dt>frequency: float</dt>
+<dd>The frequency of the AC voltage source.</dd>
+<dt>phase: float</dt>
+<dd>The phase of the AC voltage source</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the voltage source constitutive equation.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.CCCS">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">CCCS</code><span class="sig-paren">(</span><em>u</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#CCCS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.CCCS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Hybrid2" title="elementos.Hybrid2"><code class="xref py py-class docutils literal"><span class="pre">elementos.Hybrid2</span></code></a></p>
+<p>A class used to represent a current controlled current source.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>u: float</dt>
+<dd>The relation between the first and second port current when 
+the first portÂ´s voltage is 0 V.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.CCVS">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">CCVS</code><span class="sig-paren">(</span><em>r</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#CCVS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.CCVS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.CurrentControlled" title="elementos.CurrentControlled"><code class="xref py py-class docutils literal"><span class="pre">elementos.CurrentControlled</span></code></a></p>
+<p>A class used to represent a current controlled voltage source element.</p>
+<dl class="docutils">
+<dt>r: float</dt>
+<dd>The impedance value of the voltage source controlled by a current.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Capacitor">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Capacitor</code><span class="sig-paren">(</span><em>value</em>, <em>v0=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Capacitor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Capacitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a capacitor.</p>
+<dl class="docutils">
+<dt>value: float</dt>
+<dd>The capacitance value of the capacitor.</dd>
+<dt>initcondition: float</dt>
+<dd>Determinates the voltage value across the capacitor  when t=0.</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the capacitor constitutive equation.</dd>
+</dl>
+<dl class="method">
+<dt id="elementos.Capacitor.vk">
+<code class="descname">vk</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Capacitor.vk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Capacitor.vk" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.CurrentControlled">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">CurrentControlled</code><span class="sig-paren">(</span><em>r11</em>, <em>r12</em>, <em>r21</em>, <em>r22</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#CurrentControlled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.CurrentControlled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a current controlled element.</p>
+<dl class="docutils">
+<dt>r11: float</dt>
+<dd>The impedance value of the first port when the second port 
+current is 0 A, open port.</dd>
+<dt>r12: float</dt>
+<dd>The impedance value of the first port when the first port 
+current is 0 A.</dd>
+<dt>r21: float</dt>
+<dd>The impedance value of the second port when the second port 
+current is 0 A.</dd>
+<dt>r22: float</dt>
+<dd>The impedance value of the second port when the first port 
+current is 0 A.</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the current controlled constitutive equation.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.CurrentSource">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">CurrentSource</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#CurrentSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.CurrentSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a current source.</p>
+<dl class="docutils">
+<dt>value: float</dt>
+<dd>The impedance value of the resistance.</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the current source constitutive equation.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.D1N4002">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">D1N4002</code><span class="sig-paren">(</span><em>i0=1.411e-08, v=[0.4], i=[0.001]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#D1N4002"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.D1N4002" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a diode.</p>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of a diode constitutive equation.</dd>
+<dt>v: list</dt>
+<dd>It is a list with the initial values.</dd>
+</dl>
+<dl class="method">
+<dt id="elementos.D1N4002.getDiscrete">
+<code class="descname">getDiscrete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#D1N4002.getDiscrete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.D1N4002.getDiscrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method return True when the equation has been linealized.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.D1N4002.setDiscrete">
+<code class="descname">setDiscrete</code><span class="sig-paren">(</span><em>dis</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#D1N4002.setDiscrete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.D1N4002.setDiscrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>The input value determinates wheter the element equation is going to
+be linealized or not.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>dis: boolean</dt>
+<dd>True to make the equation linear. False, otherwise.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.D1N4002.setParamValues">
+<code class="descname">setParamValues</code><span class="sig-paren">(</span><em>v=None</em>, <em>i=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#D1N4002.setParamValues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.D1N4002.setParamValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>To linearization a set of values are needed. So, this method takes 
+each input arguments, and it uses to make the linealization and change 
+the equation.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>v: list</dt>
+<dd>v is a list with the voltage values of the elements port.</dd>
+<dt>i: list</dt>
+<dd>i is a list with the current values of the elements port</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Elements">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Elements</code><span class="sig-paren">(</span><em>equation=[]</em>, <em>differential=False</em>, <em>difValue=None</em>, <em>nl=False</em>, <em>tvariant=False</em>, <em>subcir=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>A class used to represent a set of electric elements.</p>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the constitutive equations of the element.</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the constitutive equations of the element.</dd>
+</dl>
+<dl class="docutils">
+<dt>current(terminal):</dt>
+<dd>It returns the way in which goes the current in the terminal, input
+value.</dd>
+<dt>nEquations():</dt>
+<dd>It returns the number of constitutive equations of the element.</dd>
+<dt>nPorts():</dt>
+<dd>It returns the number of ports of the element.</dd>
+<dt>VoltageValue(equation, port):</dt>
+<dd>It takes a equation, specified by the input parameter, of the 
+constitutive equations and it will return the value that is within the
+specified port voltage.</dd>
+<dt>CurrentValue(equation, port):</dt>
+<dd>It takes a equation, specified by the input parameter, of the 
+constitutive equations and it will return the value that is within the
+specified port current.</dd>
+<dt>UValue(equation):</dt>
+<dd>It takes a equation, specified by the input parameter, of the 
+constitutive equations and it will return the u value.</dd>
+<dt>setEquation(equation):</dt>
+<dd>It changes the element equation with the input argument.</dd>
+<dt>getEquation():</dt>
+<dd>It return the element equation.</dd>
+<dt>setuValue(equation, value):</dt>
+<dd>The u value of the equation is changed with the value input.</dd>
+<dt>getDif():</dt>
+<dd>It determinates if the equation has any differentiation.</dd>
+<dt>getDifValue():</dt>
+<dd>It specifies which variable, v or i, has been differentiate.</dd>
+<dt>getNL():</dt>
+<dd>It specifies whether the element is non-linear, or not.</dd>
+<dt>setNL(value):</dt>
+<dd>It allows the user to specify the element non-linearity.</dd>
+<dt>getTvariant():</dt>
+<dd>It determinates wheter the element has a time dependency.</dd>
+<dt>setTvariant(value=True):</dt>
+<dd>This method allows the user to determinate whether the elements is
+timer variant or not.</dd>
+<dt>getSubcir(value):</dt>
+<dd>It allows the user to determinate whether the element is a sub-circuit
+or not.</dd>
+<dt>getDiscret():</dt>
+<dd>It determinates whether the element equation has beenlinearized.</dd>
+<dt>getCir():</dt>
+<dd>It returns the solution of the inner circuit of a SubCircuit type 
+object.</dd>
+<dt>setCir(cir):</dt>
+<dd>It gets the solution of the inner circuit of a SubCircuit type object</dd>
+</dl>
+<dl class="method">
+<dt id="elementos.Elements.current">
+<code class="descname">current</code><span class="sig-paren">(</span><em>terminal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.current"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.current" title="Permalink to this definition">¶</a></dt>
+<dd><p>It returns the way in which goes the current in the terminal, input
+value.</p>
+<dl class="docutils">
+<dt>terminal: int</dt>
+<dd>The number of the terminal. It will take 0 or 1 value.</dd>
+</dl>
+<dl class="docutils">
+<dt>int</dt>
+<dd>1 if the terminal number is 0, -1 otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.currentValue">
+<code class="descname">currentValue</code><span class="sig-paren">(</span><em>equation</em>, <em>port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.currentValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.currentValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>It takes a equation, specified by the input parameter, of the 
+constitutive equations and it will return the value that is within the
+specified port current.</p>
+<dl class="docutils">
+<dt>equation: int</dt>
+<dd>It is a number that specifies the equation that the user wants to 
+take from the set of constitutive equations.</dd>
+<dt>port: int</dt>
+<dd>It is a number that specifies the port from which the user wats to
+get current information.</dd>
+</dl>
+<dl class="docutils">
+<dt>float</dt>
+<dd>The parameter value multiplying with the current variable, 
+specified by equation and port input parameters.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.getCir">
+<code class="descname">getCir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.getCir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.getCir" title="Permalink to this definition">¶</a></dt>
+<dd><p>It returns the solution of the inner circuit of a SubCircuit type 
+object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.getDif">
+<code class="descname">getDif</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.getDif"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.getDif" title="Permalink to this definition">¶</a></dt>
+<dd><p>It determinates if the equation has any differentiation.</p>
+<dl class="docutils">
+<dt>boolean</dt>
+<dd>True if the equation has any differentiation. False, otherwise</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.getDifValue">
+<code class="descname">getDifValue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.getDifValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.getDifValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>It specifies which variable, v or i, has been differentiate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.getDiscrete">
+<code class="descname">getDiscrete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.getDiscrete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.getDiscrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>It determinates whether the element equation has been linearized.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.getEquation">
+<code class="descname">getEquation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.getEquation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.getEquation" title="Permalink to this definition">¶</a></dt>
+<dd><p>It return the element equation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.getNL">
+<code class="descname">getNL</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.getNL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.getNL" title="Permalink to this definition">¶</a></dt>
+<dd><p>It specifies whether the element is non-linear, or not.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.getSubcir">
+<code class="descname">getSubcir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.getSubcir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.getSubcir" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method determinates wheter the element is a SubCircuit type 
+objetc</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.getTvariant">
+<code class="descname">getTvariant</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.getTvariant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.getTvariant" title="Permalink to this definition">¶</a></dt>
+<dd><p>It determinates whether the element has a time dependency.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.nEquations">
+<code class="descname">nEquations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.nEquations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.nEquations" title="Permalink to this definition">¶</a></dt>
+<dd><p>It returns the number of constitutive equations of the element.</p>
+<dl class="docutils">
+<dt>int</dt>
+<dd>number of constitutive equations of the element.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.nPorts">
+<code class="descname">nPorts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.nPorts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.nPorts" title="Permalink to this definition">¶</a></dt>
+<dd><p>It returns the number of ports of the element.</p>
+<dl class="docutils">
+<dt>int</dt>
+<dd>number of ports of the element.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.setCir">
+<code class="descname">setCir</code><span class="sig-paren">(</span><em>cir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.setCir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.setCir" title="Permalink to this definition">¶</a></dt>
+<dd><p>It gets the solution of the inner circuit of a SubCircuit type object</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>cir: dictionary</dt>
+<dd>the keys are equal to the circuit variables, and the dictionary 
+values are the solution of the circuit.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.setEquation">
+<code class="descname">setEquation</code><span class="sig-paren">(</span><em>equation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.setEquation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.setEquation" title="Permalink to this definition">¶</a></dt>
+<dd><p>It changes the element equation with the input argument.</p>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>A representation of the constitutive equation with lists.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.setNL">
+<code class="descname">setNL</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.setNL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.setNL" title="Permalink to this definition">¶</a></dt>
+<dd><p>It allows the user to specify the element non-linearity.</p>
+<dl class="docutils">
+<dt>value: boolean</dt>
+<dd>True to became non-linear. False, to linear.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.setSubcir">
+<code class="descname">setSubcir</code><span class="sig-paren">(</span><em>value=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.setSubcir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.setSubcir" title="Permalink to this definition">¶</a></dt>
+<dd><p>It allows the user to determinate whether the element is a sub-circuit
+or not.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>value: boolean</dt>
+<dd>True to sub-circuits. False, otherwise</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.setTvariant">
+<code class="descname">setTvariant</code><span class="sig-paren">(</span><em>value=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.setTvariant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.setTvariant" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows the user to determinate wheter the elements is
+timer variant or not.</p>
+<dl class="docutils">
+<dt>value: boolean</dt>
+<dd>True to time variant element. False, otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.setuValue">
+<code class="descname">setuValue</code><span class="sig-paren">(</span><em>equation</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.setuValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.setuValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>The u value of the equation is changed with the value input.</p>
+<dl class="docutils">
+<dt>equation: int</dt>
+<dd>It is a number that specifies the equation that the user want to 
+take to change each u value</dd>
+<dt>value: float</dt>
+<dd>It is a float number, and it will replace the u value of the 
+specified equation</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.uValue">
+<code class="descname">uValue</code><span class="sig-paren">(</span><em>equation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.uValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.uValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>It takes a equation, specified by the input parameter, of the 
+constitutive equations and it will return the u value.</p>
+<p>equation: int
+It is a number that specifies the equation that the user wants to 
+take from the set of constitutive equations.</p>
+<dl class="docutils">
+<dt>float</dt>
+<dd>The u value of the equation.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Elements.voltageValue">
+<code class="descname">voltageValue</code><span class="sig-paren">(</span><em>equation</em>, <em>port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Elements.voltageValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Elements.voltageValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>It takes a equation, specified by the input parameter, of the 
+constitutive equations and it will return the value that is within the
+specified port voltage.</p>
+<dl class="docutils">
+<dt>equation: int</dt>
+<dd>It is a number that specifies the equation that the user wants to 
+take from the set of constitutive equations.</dd>
+<dt>port: int</dt>
+<dd>It is a number that specifies the port from which the user wats to
+get voltage information.</dd>
+</dl>
+<dl class="docutils">
+<dt>float</dt>
+<dd>The parameter value multiplying with the voltage variable, 
+specified by equation and port input parameters.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Gyrator">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Gyrator</code><span class="sig-paren">(</span><em>g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Gyrator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Gyrator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.VoltageControlled" title="elementos.VoltageControlled"><code class="xref py py-class docutils literal"><span class="pre">elementos.VoltageControlled</span></code></a></p>
+<p>A class used to represent a gyrator.</p>
+<dl class="docutils">
+<dt>g: float</dt>
+<dd>The admittance value of the gyrator</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Hybrid1">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Hybrid1</code><span class="sig-paren">(</span><em>h11</em>, <em>h12</em>, <em>h21</em>, <em>h22</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Hybrid1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Hybrid1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent Hybrid circuit.</p>
+<dl class="docutils">
+<dt>h11: float</dt>
+<dd>The impedance value of the first port when the second port voltage
+is 0 V.</dd>
+<dt>h12: float</dt>
+<dd>The relation between the first and second port voltages when the 
+first portÂ´s current is 0 A.</dd>
+<dt>h21: float</dt>
+<dd>The relation between the first and second por currents when the 
+second portÂ´s voltage is 0 V.</dd>
+<dt>h22: float</dt>
+<dd>The admittance value of the second port when the first port current
+is 0 A.</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the Hybrid1 constitutive equation.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Hybrid2">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Hybrid2</code><span class="sig-paren">(</span><em>h11</em>, <em>h12</em>, <em>h21</em>, <em>h22</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Hybrid2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Hybrid2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a inverse Hybrid circuit.</p>
+<dl class="docutils">
+<dt>h11: float</dt>
+<dd>The admittance value of the first port when the second port current
+is 0 A.</dd>
+<dt>h12: float</dt>
+<dd>The relation between the first and second port current when 
+the first portÂ´s voltage is 0 V.</dd>
+<dt>h21: float</dt>
+<dd>The relation between the second and first port voltage when the
+second port current is 0 A.</dd>
+<dt>h22: float</dt>
+<dd>The admittance value of the second port when the second port current
+is 0 A.</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the inverse Hybrid constitutive equation.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Inductor">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Inductor</code><span class="sig-paren">(</span><em>value</em>, <em>i0=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Inductor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Inductor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a inductor.</p>
+<dl class="docutils">
+<dt>value: float</dt>
+<dd>The inductance value of the inductor.</dd>
+<dt>initcondition: float</dt>
+<dd>Determinates the current value across the inductor  when t=0.</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the capacitor constitutive equation.</dd>
+</dl>
+<dl class="method">
+<dt id="elementos.Inductor.ik">
+<code class="descname">ik</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Inductor.ik"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Inductor.ik" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Q2N2222">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Q2N2222</code><span class="sig-paren">(</span><em>ics=3.307157571149511e-15, ies=1.1403e-15, ar=0.8602961925565159, af=0.9943, v=[-0.7, -0.7], i=[0.001, 0.001]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Q2N2222"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Q2N2222" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a NPN transistor.</p>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the NPN transistor constitutive equation.</dd>
+</dl>
+<dl class="method">
+<dt id="elementos.Q2N2222.getDiscrete">
+<code class="descname">getDiscrete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Q2N2222.getDiscrete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Q2N2222.getDiscrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method return True when the equation has been linealized.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Q2N2222.setDiscrete">
+<code class="descname">setDiscrete</code><span class="sig-paren">(</span><em>dis</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Q2N2222.setDiscrete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Q2N2222.setDiscrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>The input value determinates wheter the element equation is going to
+be linealized or not.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>dis: boolean</dt>
+<dd>True to make the equation linear. False, otherwise.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Q2N2222.setParamValues">
+<code class="descname">setParamValues</code><span class="sig-paren">(</span><em>v=None</em>, <em>i=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Q2N2222.setParamValues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Q2N2222.setParamValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>To linearization a set of values are needed. So, this method takes 
+each input arguments, and it uses to make the linealization and change 
+the equation.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>v: list</dt>
+<dd>v is a list with the voltage values of the elements port.</dd>
+<dt>i: list</dt>
+<dd>i is a list with the current values of the elements port</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Q2N3904">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Q2N3904</code><span class="sig-paren">(</span><em>ics=5.135668043523316e-15, ies=6.734423e-15, ar=0.42749, af=0.9976, v=[-0.7, -0.7], i=[0.001, 0.001]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Q2N3904"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Q2N3904" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a NPN transistor.</p>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the NPN transistor constitutive equation.</dd>
+</dl>
+<dl class="method">
+<dt id="elementos.Q2N3904.getDiscrete">
+<code class="descname">getDiscrete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Q2N3904.getDiscrete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Q2N3904.getDiscrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method return True when the equation has been linealized.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Q2N3904.setDiscrete">
+<code class="descname">setDiscrete</code><span class="sig-paren">(</span><em>dis</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Q2N3904.setDiscrete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Q2N3904.setDiscrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>The input value determinates wheter the element equation is going to
+be linealized or not.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>dis: boolean</dt>
+<dd>True to make the equation linear. False, otherwise.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Q2N3904.setParamValues">
+<code class="descname">setParamValues</code><span class="sig-paren">(</span><em>v=None</em>, <em>i=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Q2N3904.setParamValues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Q2N3904.setParamValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>To linearization a set of values are needed. So, this method takes 
+each input arguments, and it uses to make the linealization and change 
+the equation.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>v: list</dt>
+<dd>v is a list with the voltage values of the elements port.</dd>
+<dt>i: list</dt>
+<dd>i is a list with the current values of the elements port</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Q2N3906">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Q2N3906</code><span class="sig-paren">(</span><em>ies=1.1537553902975205e-15, ics=1.3908311155608809e-15, ar=0.8278688524590164, af=0.994, v=[-0.7, -0.7], i=[-0.0001, -0.0001]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Q2N3906"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Q2N3906" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a NPN transistor.</p>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the NPN transistor constitutive equation.</dd>
+</dl>
+<dl class="method">
+<dt id="elementos.Q2N3906.getDiscrete">
+<code class="descname">getDiscrete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Q2N3906.getDiscrete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Q2N3906.getDiscrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method return True when the equation has been linealized.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Q2N3906.setDiscrete">
+<code class="descname">setDiscrete</code><span class="sig-paren">(</span><em>dis</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Q2N3906.setDiscrete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Q2N3906.setDiscrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>The input value determinates wheter the element equation is going to
+be linealized or not.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>dis: boolean</dt>
+<dd>True to make the equation linear. False, otherwise.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="elementos.Q2N3906.setParamValues">
+<code class="descname">setParamValues</code><span class="sig-paren">(</span><em>v=None</em>, <em>i=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Q2N3906.setParamValues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Q2N3906.setParamValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>To linearization a set of values are needed. So, this method takes 
+each input arguments, and it uses to make the linealization and change 
+the equation.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>v: list</dt>
+<dd>v is a list with the voltage values of the elements port.</dd>
+<dt>i: list</dt>
+<dd>i is a list with the current values of the elements port</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Resistance">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Resistance</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Resistance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Resistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a resistance.</p>
+<dl class="docutils">
+<dt>value: float</dt>
+<dd>The value of the resistance.</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the resistance constitutive equation.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Transformer">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Transformer</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Transformer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Transformer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Hybrid1" title="elementos.Hybrid1"><code class="xref py py-class docutils literal"><span class="pre">elementos.Hybrid1</span></code></a></p>
+<p>A class used to represent a transformer.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>n: float</dt>
+<dd>The numbers of turns in a winding.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Transmission1">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Transmission1</code><span class="sig-paren">(</span><em>t11</em>, <em>t12</em>, <em>t21</em>, <em>t22</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Transmission1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Transmission1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a two port network.</p>
+<dl class="docutils">
+<dt>t11: float</dt>
+<dd>The relation between the first and the second port voltages values
+when the second port current value is 0 A.</dd>
+<dt>t12: float</dt>
+<dd>The impedance of the first port when the second port current flows
+in the opposite direction and its portÂ´s voltage is 0 V.</dd>
+<dt>t21: float</dt>
+<dd>The admitance of the first port when the second port current is 
+0 A.</dd>
+<dt>t22: float</dt>
+<dd>The relation between the firs and second port currents when the 
+second portÂ´s currents flows in the opposite way and the itÂ´s 
+voltage value is 0 V.</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the transmission constitutive equation.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.Transmission2">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">Transmission2</code><span class="sig-paren">(</span><em>t11</em>, <em>t12</em>, <em>t21</em>, <em>t22</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#Transmission2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.Transmission2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a two port network with inverse transmission 
+parameters.</p>
+<dl class="docutils">
+<dt>t11: float</dt>
+<dd>The relation between the second and first port voltages when the first
+port current value is 0 A.</dd>
+<dt>t12: float</dt>
+<dd>The second port impedance value when the first port voltage is 0 V.</dd>
+<dt>t21: float</dt>
+<dd>The second port admittance value when the first port current is 0 A.</dd>
+<dt>t22: float</dt>
+<dd>The relation between the second and first port currents when first
+port voltage is 0 V.</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the inverse transmission constitutive 
+equation.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.VCCS">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">VCCS</code><span class="sig-paren">(</span><em>g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#VCCS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.VCCS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.VoltageControlled" title="elementos.VoltageControlled"><code class="xref py py-class docutils literal"><span class="pre">elementos.VoltageControlled</span></code></a></p>
+<p>A class used to represent a voltage controlled current source element.</p>
+<dl class="docutils">
+<dt>g: float</dt>
+<dd>The admittance value of the current source controlled by a voltage.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.VCVS">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">VCVS</code><span class="sig-paren">(</span><em>u</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#VCVS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.VCVS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Hybrid1" title="elementos.Hybrid1"><code class="xref py py-class docutils literal"><span class="pre">elementos.Hybrid1</span></code></a></p>
+<p>A class used to represent a voltage controlled voltafe souce.</p>
+<dl class="docutils">
+<dt>u: float</dt>
+<dd>The relation between the first and second port voltages when the 
+first portÂ´s current is 0 A.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.VoltageControlled">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">VoltageControlled</code><span class="sig-paren">(</span><em>g11</em>, <em>g12</em>, <em>g21</em>, <em>g22</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#VoltageControlled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.VoltageControlled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a voltage controlled element.</p>
+<dl class="docutils">
+<dt>g11: float</dt>
+<dd>The admittance of the first port when the second portÂ´s voltage is
+0 V.</dd>
+<dt>g12: float</dt>
+<dd>The admittance of the first port when the first portÂ´s voltage is
+0 V.</dd>
+<dt>g21: float</dt>
+<dd>The admittance of the second port when the second portÂ´s voltage is
+0 V.</dd>
+<dt>g22: float</dt>
+<dd>The admittance of the second port when the first portÂ´s voltage is
+0 V.</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the voltage controlled constitutive equation.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="elementos.VoltageSource">
+<em class="property">class </em><code class="descclassname">elementos.</code><code class="descname">VoltageSource</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elementos.html#VoltageSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elementos.VoltageSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elementos.Elements" title="elementos.Elements"><code class="xref py py-class docutils literal"><span class="pre">elementos.Elements</span></code></a></p>
+<p>A class used to represent a voltage source.</p>
+<dl class="docutils">
+<dt>value: float</dt>
+<dd>The excitation value of the source.</dd>
+</dl>
+<dl class="docutils">
+<dt>equation: list</dt>
+<dd>The representation of the voltage source constitutive equation.</dd>
+</dl>
+</dd></dl>
+
+<dl class="data">
+<dt id="elementos.pi">
+<code class="descclassname">elementos.</code><code class="descname">pi</code><em class="property"> = 3.141592653589793</em><a class="headerlink" href="#elementos.pi" title="Permalink to this definition">¶</a></dt>
+<dd><p>================================Elements=====================================</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Circuit.html"
+                        title="previous chapter">Documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="SubCircuits.html"
+                        title="next chapter">Documentation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Elements.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="SubCircuits.html" title="Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Circuit.html" title="Documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Software Development for Circuit Analysis and Solving  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Carmen Legarreta.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

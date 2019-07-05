@@ -17,7 +17,6 @@ import subprocess
 
 
 s, t, h=sy.symbols("s t h")
-print("hola")
 p = subprocess.Popen('mkdir graphics & mkdir data', shell=True)
 
 "==============================Circuit class=================================="
@@ -620,8 +619,6 @@ class Circuit(object):
                     contador = 0
                      
                     while condition:
-                        print(contador)
-                        print(c)
                         n2 = {}
                         for i in n1:
                             e = copy.deepcopy(circuito[i][0])
@@ -775,7 +772,6 @@ class Circuit(object):
         while contador < 100:
             
             contador += 1
-            print(a)
             if a < 1e-10 and len(sub) == 0:
                 for i in nol:
                     self.__circuit[i][0].setNL(True)
@@ -814,7 +810,6 @@ class Circuit(object):
             # comprobacion si el nuevo resultado es valido.
             f1 = [f.subs([(a, s[a]) for a in variables]) for f in F]
             b = sy.sqrt(sum([f**2 for f in f1]))
-            print(b)
             if b > 1e10:
                 for i in nol:
                     self.__circuit[i][0].setNL(True)
@@ -1016,7 +1011,6 @@ class Circuit(object):
                  
             # mediante la sentencia setEquation() se sustituye la ecuaciÃ³n de
             # defecto del elemento por la ecuaciÃ³n con los h ya sustituidos.
-            print(equation)
             element.setEquation(equation)
          
         # con esta funcion se intenta sustituir el valor t de las ecuaciones
