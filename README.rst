@@ -1,11 +1,11 @@
 cirve
 =====
 
-En los casos de circuitos lineales y pequeños es facil obtner su solución
+En los casos de circuitos lineales y pequeños es fácil obtner su solución
 manualmente. Sin embargo, a medida que la complejidad aumenta es necesaria
 la implementación de métodos numéricos aplicados en computación. En este 
 repositorio se presenta el paquete cirve cuya finalidad es resolver circuitos
-algebráicos y dinámicos.
+ tanto resistivos como dinámicos, lineales o no lineales.
 
 
 Descarga
