@@ -11,7 +11,7 @@ repositorio se presenta el paquete cirve cuya finalidad es resolver circuitos
 Descarga
 --------
 
-Es posible descargar este repositorio con el siguiente enlace
+Es posible descargar este repositorio con el siguiente enlace:
 
 ::
 
@@ -26,13 +26,13 @@ carpeta de examples se ofrecen varios ejemplos de su uso, y en consecuencia la f
 Instalación
 -----------
 
-Para su uso es necesario tener la version de Python 3, o superior. Por otro lado, el paquete cirve tiene dependencia de los siquientes paquetes: numpy, sympy, copy, subprocess, PIL, y matplotlib. Para la instalación de dichos paquetes es posible usar pip, esto es:
+Para su uso es necesario tener la versión de Python 3, o superior. Por otro lado, el paquete cirve tiene dependencia de los siquientes paquetes: numpy, sympy, copy, subprocess, PIL, y matplotlib. Para la instalación de dichos paquetes es posible usar pip, esto es:
 
 ::
 
         $pip install <nombre del paquete>
 
-Si no se tiene instalado pip consulte la siguiente guia:
+Si no se tiene instalado pip consulte la siguiente guía:
 
 ::
 
