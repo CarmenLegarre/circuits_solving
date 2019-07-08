@@ -4,8 +4,8 @@ cirve
 En los casos de circuitos lineales y pequeños es fácil obtener su solución
 manualmente. Sin embargo, a medida que la complejidad aumenta es necesaria
 la implementación de métodos numéricos aplicados en computación. En este 
-repositorio se presenta el paquete cirve cuya finalidad es resolver circuitos
- tanto resistivos como dinámicos, lineales o no lineales.
+repositorio se presenta el paquete cirve cuya finalidad es resolver circuitos 
+tanto resistivos como dinámicos, lineales o no lineales.
 
 
 Descarga
