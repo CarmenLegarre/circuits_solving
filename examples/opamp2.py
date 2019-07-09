@@ -1,5 +1,5 @@
-from cirve import elementos as Element
-from cirve.circuito import Circuit
+import elementos as Element
+from circuito import Circuit
 from time import time
 
 Q1 = Element.Q2N3906(v=[-0.7, -0.7])
