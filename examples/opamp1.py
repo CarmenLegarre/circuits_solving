@@ -1,5 +1,5 @@
-from cirve import elementos as Element
-from cirve.circuito import Circuit
+import elementos as Element
+from circuito import Circuit
 from time import time
 
 # la clase Circuit es capaz de encontrar una solución al circuito que se 
@@ -78,8 +78,8 @@ circuito = [[FT1, [1, 0]], [FT2, [26, 0]], [r1, [3, 27]],
             [c, [19, 10]], [ro, [4, 0]], [rf, [3, 4]], [vs, [27, 0]],
             [FT3, [2, 0]], [FT6, [5, 28]], [FT7, [17, 29]], [FT8, [18, 30]]]
 
-stime=time()
-c=Circuit(circuito)
+stime = time()
+c = Circuit(circuito)
 c.timeAnalysis([34, 36], [0, 0], ["voltage", "voltage"],
                0, 0.001, 100)
 etime=time()-stime
