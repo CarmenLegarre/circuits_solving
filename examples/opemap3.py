@@ -1,6 +1,6 @@
-from cirve import elementos as Element
-from cirve.circuito import Circuit
-from cirve import subcircuit as SCir
+import elementos as Element
+from circuito import Circuit
+import subcircuit as SCir
 from time import time
 
 # En este caso Circuit es capaz de dar soluciones, sin embargo su solución 
