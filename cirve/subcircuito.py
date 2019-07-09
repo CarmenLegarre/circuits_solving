@@ -8,8 +8,8 @@ Created on Mon May  6 10:30:44 2019
 import sympy as sy
 import numpy as np
 import random as ra
-from . import elementos as Element 
-from .circuito import Circuit
+from  elementos as Element 
+from  import Circuit
 from copy import deepcopy
 
 class SubCircuit(Element.Elements):
