@@ -1,5 +1,5 @@
-from cirve import elementos as Element
-from cirve.circuito import Circuit
+import elementos as Element
+from circuito import Circuit
 from time import time
 
 R1 = Element.Resistance(1e3)
