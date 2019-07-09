@@ -7,9 +7,9 @@ current solution....
 """
 
 
-from .errors import InputError
-from .graph import plotFunction
-from . import elementos as Element
+from errors import InputError
+from graph import plotFunction
+from  import elementos as Element
 import numpy as np
 import sympy as sy
 import copy
