@@ -9,7 +9,7 @@
 # @author: Carmen
 
 
-from .circuito import Circuit
+from circuito import Circuit
 import sympy as sy
 import math as m
 import numpy as np
