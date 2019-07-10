@@ -15,7 +15,7 @@ Es posible descargar este repositorio con el siguiente enlace:
 
 ::
 
-        $https://github.com/CarmenLegarre/circuits_solving/tarball/0.2
+        $https://github.com/CarmenLegarre/circuits_solving/tarball/0.3
 
 Documentación y uso
 -------------------
