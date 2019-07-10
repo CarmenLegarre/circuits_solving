@@ -18,8 +18,8 @@ D2 = Element.D1N4002(2.68e-9, v=[-0.01])
 C = Element.Capacitor(60e-12, -8)
 R = Element.Resistance(50e3)
 
-Ia = Element.CurrentSource(7.53e-14)
-Ic = Element.CurrentSource(1.62e-15)
+Ia = Element.CurrentSource(20e-6)
+Ic = Element.CurrentSource(20e-6)
 
 FT1 = Element.VoltageSource(0)
 FT2 = Element.VoltageSource(-1)
